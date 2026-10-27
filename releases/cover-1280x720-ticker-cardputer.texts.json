@@ -1,0 +1,87 @@
+{
+ "entry": "TICKER",
+ "cover": "releases/cover-1280x720-ticker-cardputer.png",
+ "canvas": [
+  1280,
+  720
+ ],
+ "layout": "photo",
+ "hero": {
+  "kind": "photo",
+  "path": "docs/photo/device.jpg"
+ },
+ "texts": [
+  {
+   "s": "TICKER",
+   "kind": "title",
+   "bbox": [
+    56,
+    135,
+    376,
+    198
+   ]
+  },
+  {
+   "s": "行情机 · 一天 6 分钟的像素交易",
+   "kind": "sub_cn",
+   "bbox": [
+    56,
+    253,
+    519,
+    284
+   ]
+  },
+  {
+   "s": "Pocket market terminal · 6 minutes a day",
+   "kind": "sub_en",
+   "bbox": [
+    56,
+    302,
+    448,
+    321
+   ]
+  },
+  {
+   "s": "你的单子会推动价格 · 大单滑点更狠",
+   "kind": "bullet",
+   "bbox": [
+    86,
+    345,
+    502,
+    371
+   ]
+  },
+  {
+   "s": "鲸鱼 / 灰犀牛 / 黑天鹅 · 方向严格随机",
+   "kind": "bullet",
+   "bbox": [
+    86,
+    382,
+    533,
+    407
+   ]
+  },
+  {
+   "s": "每只标的都有隐藏性格 · 玩多了才认得",
+   "kind": "bullet",
+   "bbox": [
+    86,
+    418,
+    527,
+    443
+   ]
+  },
+  {
+   "s": "持仓关机续玩 · 2 分钟自动熄屏",
+   "kind": "bullet",
+   "bbox": [
+    86,
+    454,
+    451,
+    479
+   ]
+  }
+ ],
+ "generator": "tools/mkcover.py",
+ "generated": "2026-10-27T12:11:33"
+}

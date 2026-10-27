@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<style>
+  body{background:transparent;margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"PingFang SC",sans-serif;color:var(--foreground);}
+  .wrap{max-width:820px;}
+  h2{font-size:15px;margin:18px 0 8px;font-weight:600;letter-spacing:.02em}
+  h2 span{color:var(--muted-foreground);font-weight:400;font-size:12px;margin-left:8px}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;margin:6px 0 4px}
+  th,td{border-bottom:1px solid var(--border);padding:5px 7px;text-align:left;vertical-align:top}
+  th{color:var(--muted-foreground);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+  td.k{color:var(--accent);font-family:ui-monospace,monospace;font-size:11.5px;white-space:nowrap}
+  .num{font-family:ui-monospace,monospace;color:var(--accent)}
+  .warn{color:#e0663c}
+  .ok{color:#4fae6a}
+  .diag{margin:8px 0 2px;border:1px solid var(--border);border-radius:8px;padding:6px;background:var(--card)}
+  svg{display:block;width:100%;height:auto}
+  .note{font-size:11.5px;color:var(--muted-foreground);line-height:1.6;margin:4px 0 0}
+  .legend{font-size:11px;color:var(--muted-foreground);margin-top:4px}
+  .pill{display:inline-block;border:1px solid var(--border);border-radius:99px;padding:0 7px;font-size:10.5px;color:var(--muted-foreground);margin-right:5px}
+</style></head><body><div class="wrap">
+
+<h2>一、当前内核的数据关系图<span>六层传导，蓝色=随机源，橙色=非线性/放大器</span></h2>
+<div class="diag">
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace,monospace" font-size="10.5">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor" opacity="0.55"/>
+    </marker>
+  </defs>
+  <g color="#888">
+
+  <!-- 层 1 世界 -->
+  <text x="8" y="16" fill="#8a8a8a" font-size="10">世界层 / 每夜持续</text>
+  <rect x="60" y="24" width="150" height="40" rx="6" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="135" y="42" text-anchor="middle" fill="#3b82f6">marketTide</text>
+  <text x="135" y="56" text-anchor="middle" fill="#9aa">AR(1) ρ.72 ±5%</text>
+
+  <rect x="250" y="24" width="190" height="40" rx="6" fill="none" stroke="#666"/>
+  <text x="345" y="42" text-anchor="middle">pxCoin[12] 活价</text>
+  <text x="345" y="56" text-anchor="middle" fill="#9aa">跨日连续，跌到 .5 不重置</text>
+
+  <rect x="480" y="24" width="150" height="40" rx="6" fill="none" stroke="#666"/>
+  <text x="555" y="42" text-anchor="middle">idx[5] 指数</text>
+  <text x="555" y="56" text-anchor="middle" fill="#9aa">等权 ÷ 基准价</text>
+
+  <rect x="670" y="24" width="120" height="40" rx="6" fill="none" stroke="#666"/>
+  <text x="730" y="42" text-anchor="middle">底部轮播</text>
+  <text x="730" y="56" text-anchor="middle" fill="#9aa">3.5s / 换一组</text>
+
+  <line x1="210" y1="44" x2="248" y2="44" stroke="#666" marker-end="url(#a)"/>
+  <text x="214" y="38" fill="#9aa">×1 / ×1.8</text>
+  <line x1="440" y1="44" x2="478" y2="44" stroke="#666" marker-end="url(#a)"/>
+  <line x1="630" y1="44" x2="668" y2="44" stroke="#666" marker-end="url(#a)"/>
+
+  <!-- 层 2 选标的 -->
+  <text x="8" y="94" fill="#8a8a8a" font-size="10">标的层 / 每天开盘</text>
+  <rect x="60" y="102" width="190" height="40" rx="6" fill="none" stroke="#3b82f6"/>
+  <text x="155" y="120" text-anchor="middle" fill="#3b82f6">pickStock（12 选 1）</text>
+  <text x="155" y="134" text-anchor="middle" fill="#9aa">过滤：整股买得起才派</text>
+
+  <rect x="290" y="102" width="180" height="40" rx="6" fill="none" stroke="#666"/>
+  <text x="380" y="120" text-anchor="middle">assetVol 性格</text>
+  <text x="380" y="134" text-anchor="middle" fill="#9aa">银行.6 消费1 科技2.2 币3.6</text>
+
+  <rect x="510" y="102" width="150" height="40" rx="6" fill="none" stroke="#666"/>
+  <text x="585" y="120" text-anchor="middle">入场价 = 活价</text>
+  <text x="585" y="134" text-anchor="middle" fill="#9aa">不重置、不再抖动</text>
+
+  <line x1="345" y1="64" x2="345" y2="100" stroke="#666" marker-end="url(#a)"/>
+  <text x="350" y="86" fill="#9aa">取当前价</text>
+  <line x1="250" y1="122" x2="288" y2="122" stroke="#666" marker-end="url(#a)"/>
+  <line x1="470" y1="122" x2="508" y2="122" stroke="#666" marker-end="url(#a)"/>
+
+  <!-- 层 3 日内剧情 -->
+  <text x="8" y="172" fill="#8a8a8a" font-size="10">日内剧情层 / 每 30 秒推进一根</text>
+  <rect x="60" y="180" width="140" height="44" rx="6" fill="none" stroke="#3b82f6"/>
+  <text x="130" y="197" text-anchor="middle" fill="#3b82f6">dayDrift</text>
+  <text x="130" y="211" text-anchor="middle" fill="#9aa">-4%..+32%</text>
+
+  <rect x="220" y="180" width="150" height="44" rx="6" fill="none" stroke="#3b82f6"/>
+  <text x="295" y="197" text-anchor="middle" fill="#3b82f6">ctl[4] 控制点</text>
+  <text x="295" y="211" text-anchor="middle" fill="#9aa">smoothstep 插值</text>
+
+  <rect x="390" y="180" width="130" height="44" rx="6" fill="none" stroke="#3b82f6"/>
+  <text x="455" y="197" text-anchor="middle" fill="#3b82f6">wander</text>
+  <text x="455" y="211" text-anchor="middle" fill="#9aa">均值回复 OU</text>
+
+  <rect x="540" y="180" width="120" height="44" rx="6" fill="none" stroke="#e0663c"/>
+  <text x="600" y="197" text-anchor="middle" fill="#e0663c">panic</text>
+  <text x="600" y="211" text-anchor="middle" fill="#9aa">-4.5%×p, ×.96/根</text>
+
+  <rect x="680" y="180" width="110" height="44" rx="6" fill="none" stroke="#e0663c"/>
+  <text x="735" y="197" text-anchor="middle" fill="#e0663c">scar</text>
+  <text x="735" y="211" text-anchor="middle" fill="#9aa">累积·不回头</text>
+
+  <!-- 目标价 -->
+  <rect x="250" y="258" width="300" height="42" rx="6" fill="none" stroke="#e0663c" stroke-width="1.4"/>
+  <text x="400" y="275" text-anchor="middle" fill="#e0663c">target = 基准 ×(1 + 曲线 + scar + tide×.6 - panic + wave)</text>
+  <text x="400" y="291" text-anchor="middle" fill="#9aa">价格以 3.5%/tick 向 target 靠拢 + 噪声</text>
+  <line x1="130" y1="224" x2="290" y2="256" stroke="#666" marker-end="url(#a)"/>
+  <line x1="295" y1="224" x2="330" y2="256" stroke="#666" marker-end="url(#a)"/>
+  <line x1="455" y1="224" x2="440" y2="256" stroke="#666" marker-end="url(#a)"/>
+  <line x1="600" y1="224" x2="520" y2="256" stroke="#666" marker-end="url(#a)"/>
+  <line x1="735" y1="224" x2="560" y2="256" stroke="#666" marker-end="url(#a)"/>
+  <line x1="380" y1="142" x2="400" y2="178" stroke="#666" marker-end="url(#a)"/>
+
+  <!-- 层 4 异象 -->
+  <text x="8" y="330" fill="#8a8a8a" font-size="10">异象层 / 每根最多 1 个，随机 3-21 秒落下</text>
+  <rect x="60" y="338" width="170" height="46" rx="6" fill="none" stroke="#3b82f6"/>
+  <text x="145" y="355" text-anchor="middle" fill="#3b82f6">evKind + 剧本抽签</text>
+  <text x="145" y="369" text-anchor="middle" fill="#9aa">股票 29%/根 · 币 48%/根</text>
+  <text x="145" y="381" text-anchor="middle" fill="#9aa">5 类 × 3 剧本</text>
+
+  <rect x="260" y="338" width="160" height="46" rx="6" fill="none" stroke="#e0663c"/>
+  <text x="340" y="355" text-anchor="middle" fill="#e0663c">shock/tail 斜坡</text>
+  <text x="340" y="369" text-anchor="middle" fill="#9aa">2-4 根冲击 + 2-5 根余波</text>
+
+  <rect x="450" y="338" width="140" height="46" rx="6" fill="none" stroke="#666"/>
+  <text x="520" y="355" text-anchor="middle">evDex[6] 收集</text>
+  <text x="520" y="369" text-anchor="middle" fill="#9aa">战绩册第 3 页</text>
+
+  <rect x="620" y="338" width="170" height="46" rx="6" fill="none" stroke="#3b82f6"/>
+  <text x="705" y="355" text-anchor="middle" fill="#3b82f6">财报 ER（36%/9%）</text>
+  <text x="705" y="369" text-anchor="middle" fill="#9aa">改写 ctl + erVol + panic</text>
+  <text x="705" y="381" text-anchor="middle" fill="#9aa">传闻 60% 出 · 55% 真</text>
+
+  <line x1="340" y1="384" x2="600" y2="256" stroke="#e0663c" marker-end="url(#a)"/>
+  <text x="470" y="330" fill="#e0663c">scar 累积</text>
+  <line x1="520" y1="384" x2="520" y2="402" stroke="#666" marker-end="url(#a)"/>
+  <line x1="705" y1="384" x2="620" y2="256" stroke="#3b82f6" marker-end="url(#a)"/>
+  <text x="640" y="330" fill="#3b82f6">重写曲线</text>
+  <line x1="380" y1="142" x2="200" y2="336" stroke="#666" stroke-dasharray="3 3" marker-end="url(#a)"/>
+  <text x="42" y="322" fill="#9aa">波动率放大异象概率</text>
+
+  <!-- 层 5 账户 -->
+  <text x="8" y="428" fill="#8a8a8a" font-size="10">账户层 / 你的每一次按键</text>
+  <rect x="60" y="436" width="150" height="46" rx="6" fill="none" stroke="#666"/>
+  <text x="135" y="453" text-anchor="middle">B 买 1/3 · S 卖 1 档</text>
+  <text x="135" y="467" text-anchor="middle" fill="#9aa">整股（币可小数）</text>
+  <text x="135" y="479" text-anchor="middle" fill="#9aa">手续费 0.25%/笔</text>
+
+  <rect x="230" y="436" width="170" height="46" rx="6" fill="none" stroke="#666"/>
+  <text x="315" y="453" text-anchor="middle">持仓费 0.15%/根</text>
+  <text x="315" y="467" text-anchor="middle" fill="#9aa">财报根 ×2</text>
+  <text x="315" y="479" text-anchor="middle" fill="#9aa">付不起 → 爆仓</text>
+
+  <rect x="420" y="436" width="160" height="46" rx="6" fill="none" stroke="#666"/>
+  <text x="500" y="453" text-anchor="middle">equity → dayEq[13]</text>
+  <text x="500" y="467" text-anchor="middle" fill="#9aa">今日曲线（不落盘）</text>
+
+  <rect x="600" y="436" width="190" height="46" rx="6" fill="none" stroke="#666"/>
+  <text x="695" y="453" text-anchor="middle">histEq / histIdx[24]</text>
+  <text x="695" y="467" text-anchor="middle" fill="#9aa">跨日战绩 vs 大盘</text>
+  <text x="695" y="479" text-anchor="middle" fill="#9aa">落盘 · 版本 4 · CRC</text>
+
+  <line x1="400" y1="300" x2="135" y2="434" stroke="#666" marker-end="url(#a)"/>
+  <text x="150" y="410" fill="#9aa">价格</text>
+  <line x1="210" y1="459" x2="228" y2="459" stroke="#666" marker-end="url(#a)"/>
+  <line x1="400" y1="459" x2="418" y2="459" stroke="#666" marker-end="url(#a)"/>
+  <line x1="580" y1="459" x2="598" y2="459" stroke="#666" marker-end="url(#a)"/>
+  <line x1="520" y1="402" x2="620" y2="434" stroke="#666" stroke-dasharray="3 3" marker-end="url(#a)"/>
+  </g>
+</svg>
+<div class="legend"><span class="pill">蓝 = 随机源</span><span class="pill">橙 = 放大器/非线性</span><span class="pill">虚线 = 间接影响</span></div>
+</div>
+
+<h2>二、层与层之间的传导（系数是代码里的真实值）</h2>
+<table>
+<tr><th>上游</th><th>下游</th><th>规则</th><th>味道</th></tr>
+<tr><td class="k">marketTide</td><td>pxCoin[12]</td><td class="num">AR(1) ρ=.72，±5%，币 ×1.8</td><td>群涨群跌，大盘会剧烈摆</td></tr>
+<tr><td class="k">marketTide</td><td>当前标的 target</td><td class="num">×0.6</td><td>你逃不掉大盘</td></tr>
+<tr><td class="k">dayDrift + ctl[4]</td><td>当日主曲线</td><td class="num">smoothstep 四段</td><td>每天一条独一无二的走势</td></tr>
+<tr><td class="k">wander</td><td>主曲线</td><td class="num">OU，±8% 夹</td><td>几秒一个来回的呼吸</td></tr>
+<tr><td class="k">异象剧本</td><td>scar</td><td class="num">冲击 2-4 根 + 余波 2-5 根</td><td class="warn">被拽走就不回来</td></tr>
+<tr><td class="k">异象 / 财报</td><td>panic</td><td class="num">+0.18~1.0，×0.96/根</td><td class="warn">情绪不快速修复</td></tr>
+<tr><td class="k">财报结果</td><td>ctl 全量重写 + erVol</td><td class="num">6 种剧本</td><td>换剧情，不只是涨跌</td></tr>
+<tr><td class="k">assetVol</td><td>噪声 / 异象概率</td><td class="num">.6 / 1 / 2.2 / 3.6</td><td>币的异象率 48%/根</td></tr>
+<tr><td class="k">pxCoin</td><td>idx[5]</td><td class="num">等权 / 基准价 ×1000</td><td>大盘是"真算出来的"</td></tr>
+<tr><td class="k">价格 + 仓位</td><td>equity → 战绩册</td><td class="num">13 点 / 24 天</td><td>可以和大盘比输赢</td></tr>
+</table>
+
+<h2>三、每次开局的随机源清单<span>这就是"新鲜感"的原料表</span></h2>
+<table>
+<tr><th>时机</th><th>抽什么</th><th>取值空间</th><th>组合数</th></tr>
+<tr><td>每次启动</td><td>持仓 / 空仓</td><td>续玩 or 新的一天</td><td class="num">2</td></tr>
+<tr><td rowspan="5">每天开盘</td><td>标的</td><td>12 只（过滤买不起的）</td><td class="num">≤12</td></tr>
+<tr><td>当日漂移 dayDrift</td><td>-4%..+32%（币 ±35%）</td><td class="num">连续</td></tr>
+<tr><td>主曲线 ctl[4]</td><td>4 个控制点各 ±3~11.5%</td><td class="num">连续</td></tr>
+<tr><td>波动倍数 scAmp</td><td>0.8~1.4×</td><td class="num">连续</td></tr>
+<tr><td>财报日</td><td>无 55% / 预告 36% / 突袭 9%</td><td class="num">3</td></tr>
+<tr><td rowspan="3">每根蜡烛</td><td>异象（股票）</td><td>无 71% / 天鹅 3 / 犀牛 6 / 鲸 10 / 升天 10</td><td class="num">5</td></tr>
+<tr><td>异象（加密）</td><td>无 52% / 瀑布 16 / 升天 16 / 天鹅 8 / 鲸 8</td><td class="num">5</td></tr>
+<tr><td>剧本</td><td>每类 3 套（方向不预设）</td><td class="num">3</td></tr>
+<tr><td>财报落地</td><td>结果</td><td>BEAT / MISS / INLINE / GUIDE / SCANDAL / 利好出尽</td><td class="num">6</td></tr>
+<tr><td>传闻</td><td>出现 60% · 属实 55%</td><td>真假四态</td><td class="num">4</td></tr>
+</table>
+<p class="note">一天 12 根，按上表相乘，单日形态组合是天文数字——但<strong>玩家能感知到差异的轴只有 3 根</strong>：涨还是跌、有没有异象、财报炸不炸。这是下一阶段要补的地方（见第五节）。</p>
+
+<h2>四、当前已有的闭环（会互相咬合的）</h2>
+<table>
+<tr><th>闭环</th><th>怎么咬合</th><th>玩家能怎么利用</th></tr>
+<tr><td class="k">恐慌 → 阴跌 → 更恐慌</td><td>事件抬 panic，panic 压价格，价格跌又让异象更频繁（vol 放大）</td><td class="ok">躲开犀牛/天鹅，等 panic 修复完再进</td></tr>
+<tr><td class="k">scar → 不回头</td><td>事件后价位被永久拽走</td><td class="ok">鲸鱼可抄底，犀牛/天鹅不能接刀（但要猜剧本）</td></tr>
+<tr><td class="k">活价 → 指数 → 世界</td><td>你没交易的股票也在走，指数跟着变</td><td class="ok">看大盘判断"是我的问题还是市场的问题"</td></tr>
+<tr><td class="k">持仓费 → 时间成本</td><td>拿着就流血，财报根翻倍</td><td class="ok">短线 vs 拿住的取舍</td></tr>
+<tr><td class="k">档位 → 仓位管理</td><td>1/3 建仓，按档卖出</td><td class="ok">分批止盈/分批撤退</td></tr>
+</table>
+
+<h2>五、内核的薄弱点（诚实评估）</h2>
+<table>
+<tr><th>问题</th><th>为什么是问题</th><th>方向</th></tr>
+<tr><td class="warn">异象和"你这只票"没关系</td><td>鲸鱼进场砸的是随机剧本，不区分这只票是高估值还是便宜货——玩家学不到"这只票的性格"</td><td>给每只标的加隐藏性格：容易出鲸鱼 / 财报爱造假 / 抗跌</td></tr>
+<tr><td class="warn">财报是一次性的</td><td>落地就结束，没有"下季度再见"的连续性</td><td>财报留痕：造假被查 → 该股永久打折 / 信誉</td></tr>
+<tr><td class="warn">没有"因为所以"</td><td>异象与标的、指数、财报之间没有因果关系，全是各自掷骰子</td><td>建立最小因果：指数崩 → 个股异象概率上升；财报差 → 该股后面几天持续弱</td></tr>
+<tr><td class="warn">玩家决策空间偏窄</td><td>只有买/卖/清仓，没有"等""试探""对冲"</td><td>加一个"观望一格"或"挂单"（在某个价位自动买入）</td></tr>
+<tr><td class="warn">收集没有奖励</td><td>图鉴只记录，不给任何回馈</td><td>集齐 6 类给一次性奖励（初始资金 / 新标的解锁）</td></tr>
+</table>
+<p class="note">结论：<strong>随机源已经够多，缺的是"关联"</strong>——现在像 12 个独立骰子各掷各的，下一步要把它们连成一张有因果的网，让玩家能"推理"而不是"押注"。</p>
+
+</div></body></html>

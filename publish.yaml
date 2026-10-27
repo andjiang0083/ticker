@@ -1,0 +1,14 @@
+# TICKER — M5Burner 发布清单
+# 发布前跑 ~/esp32/tools/release.py ticker 过门禁
+# bin 必须是真 merged（bootloader + 分区表 + app）：M5Burner 硬编码烧 0x0，app-only 必黑屏。
+# 追加版本靠 name 相同 —— 这个名字一个字符都不能改
+project: ticker
+platform_entries:
+  - name: TICKER
+    device: Cardputer
+    category: Games
+    version: "0.1.0"
+    bin: releases/ticker-0.1.0-merged.bin
+    cover: releases/cover-1280x720-ticker-cardputer.png
+    project_link: "https://github.com/andjiang0083/ticker"
+    readback: 待上传

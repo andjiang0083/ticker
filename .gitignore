@@ -1,0 +1,16 @@
+# 忽略构建产物与发布件（开源仓只带源码）
+.pio/
+.pioignore
+releases/*.bin
+releases/_photo_*.png
+releases/_thumb*.png
+releases/store-sim-*.png
+
+# 模拟器产物（每次跑都会变）
+sim/sim
+*.ppm
+sim/*.png
+sim/_archive/
+
+# macOS
+.DS_Store
